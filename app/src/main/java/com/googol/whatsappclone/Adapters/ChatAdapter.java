@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.googol.whatsappclone.AES;
 import com.googol.whatsappclone.Models.MessageModel;
 import com.googol.whatsappclone.R;
 
@@ -81,11 +82,19 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }
         });
 
-
+        //TODO : Implement AES DECRYPT
         if (holder.getClass() == SenderViewHolder.class){
-            ((SenderViewHolder)holder).senderText.setText(messageModels.get(position).getMessage());
+            try {
+                ((SenderViewHolder)holder).senderText.setText(AES.decrypt(messageModels.get(position).getMessage()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }else {
-            ((ReceiverViewHolder)holder).receiverText.setText(messageModels.get(position).getMessage());
+            try {
+                ((ReceiverViewHolder)holder).receiverText.setText(AES.decrypt(messageModels.get(position).getMessage()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

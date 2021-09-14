@@ -86,10 +86,16 @@ public class ChatDetailActivity extends AppCompatActivity {
                 });
 
 
+        //TODO : Implement AES ENCRYPT here
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String message = binding.etmessage.getText().toString();
+                try {
+                    message = AES.encrypt(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 final MessageModel model = new MessageModel(senderId, message);
                 model.setTimeStamp(new Date().getTime());
                 binding.etmessage.setText("");
